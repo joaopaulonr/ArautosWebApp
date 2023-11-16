@@ -1,12 +1,14 @@
+import './assets/main.css'
+
 import { createApp } from 'vue'
-import './style.css'
+import { createPinia } from 'pinia'
+
 import App from './App.vue'
-import router from './router';
+import router from './router'
 
-const app = createApp(App);
+const app = createApp(App)
 
-// Use o roteador aqui
-app.use(router);
+app.use(createPinia())
+app.use(router)
 
-// Monte a aplicação no elemento com o ID 'app'
-app.mount('#app');
+app.mount('#app')
