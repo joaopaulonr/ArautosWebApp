@@ -91,6 +91,9 @@ func HandleLogin(db *sqlx.DB, jwtKey []byte) gin.HandlerFunc {
 			return
 		}
 
+		c.Header("Authorization", "Bearer "+tokenString)
+
+
 		c.JSON(http.StatusOK, gin.H{"token": tokenString})
 	}
 }

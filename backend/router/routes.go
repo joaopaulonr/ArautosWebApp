@@ -16,9 +16,9 @@ func RegisterRoutes(router *gin.Engine, db *sqlx.DB, jwtKey []byte) {
 }
 
 func PostRoutes(router *gin.Engine, db *sqlx.DB, jwtKey []byte) {
-	router.GET(("/post"), handler.ShowPost(db))
-	router.POST(("/post"), handler.CreatePost(db))
-	router.PUT(("/post"), handler.UpdatePost(db))
-	router.DELETE(("/post"), handler.DeletePost(db))
-	router.GET(("/posts"), handler.ListAllPosts(db))
+	// router.GET(("/post"), handler.ShowPost(db, jwtKey))
+	router.POST(("/post"), handler.CreatePost(db, jwtKey))
+	// router.PUT(("/post"), handler.UpdatePost(db, jwtKey))
+	// router.DELETE(("/post"), handler.DeletePost(db,jwtKey))
+	// router.GET(("/posts"), handler.ListAllPosts(db, jwtKey))
 }

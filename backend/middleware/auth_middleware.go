@@ -2,6 +2,7 @@
 package middleware
 
 import (
+	"backend/models"
 	"log"
 	"net/http"
 	"strings"
@@ -9,11 +10,6 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 )
-
-type Claims struct {
-	Username string `json:"username"`
-	jwt.StandardClaims
-}
 
 func AuthMiddleware(jwtKey []byte) gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -33,7 +29,15 @@ func AuthMiddleware(jwtKey []byte) gin.HandlerFunc {
 			return
 		}
 
-		token, err := jwt.ParseWithClaims(tokenString, &Claims{}, func(token *jwt.Token) (interface{}, error) {
+		// Verificar o formato do token
+		parts := strings.Split(tokenString, " ")
+		if len(parts) != 2 || parts[0] != "Bearer" {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid token format"})
+			c.Abort()
+			return
+		}
+
+		token, err := jwt.ParseWithClaims(parts[1], &models.Claims{}, func(token *jwt.Token) (interface{}, error) {
 			return jwtKey, nil
 		})
 
